@@ -63,11 +63,13 @@ class MyComponent {
 
 ## MediaMatcher
 
-MediaMatcher is a lower-level utility that wraps the native matcheMedia. This service normalizes browser differences and serves as a convenient API that can be replaces with a fake in unit tests. The matchMedia method can be used to get a native MediaQueryList.
+MediaMatcher は、ネイティブ matcheMedia をラップする下位レベルのユーティリティです。 このサービスはブラウザの違いを正規化し、便利なAPIとして機能し、単体テストでは偽のものに置き換えることができます。 matchMediaメソッドを使用して、ネイティブの MediaQueryList を取得できます。
 
+```
 @Component({...})
 class MyComponent {
   constructor(mediaMatcher: MediaMatcher) {
     const mediaQueryList = mediaMatcher.matchMedia('(min-width: 1px)');
   }
 }
+```
