@@ -3,4 +3,8 @@
   <button (click)="templatePortal.detach()">click to detach</button>
 </div>
 <app-my-first-panel></app-my-first-panel> -->
+<ng-template #testTemplate let-name>
+  <div>User {{ name }} </div>        
+</ng-template>
+<app-parent></app-parent>
 <app-cdk-table-basic-example></app-cdk-table-basic-example>

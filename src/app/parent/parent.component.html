@@ -1,0 +1,6 @@
+<div>children count: <strong>{{ count }}</strong></div>
+<div>
+  <ol>
+    <app-child *ngFor="let log of logs; let i = index" [log]="log" [index]="i" (onDelete)="remove($event)"></app-child>
+  </ol>
+</div>

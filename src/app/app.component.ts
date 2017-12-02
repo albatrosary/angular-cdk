@@ -1,9 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Overlay } from '@angular/cdk/overlay';
-import { ComponentPortal } from '@angular/cdk/portal';
-import { MyFirstPanelComponent } from './my-first-panel/my-first-panel.component';
-import { CdkPortal } from '@angular/cdk/portal';
-import { OverlayConfig } from '@angular/cdk/overlay';
+import { ApplicationRef, ComponentFactoryResolver, Component, OnInit, Injector, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
+import { HeaderComponent } from './header/header.component';
+import { DomPortalHost, Portal, TemplatePortal } from '@angular/cdk/portal';
 
 @Component({
   selector: 'app-root',
@@ -11,9 +8,33 @@ import { OverlayConfig } from '@angular/cdk/overlay';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  
-  constructor() { }
+  @ViewChild('testTemplate') testTemplate: TemplateRef<any>;
+  private portalHost: DomPortalHost;
+
+  constructor(
+    private componentFactoryResolver: ComponentFactoryResolver,
+    private injector: Injector,
+    private appRef: ApplicationRef,
+    private viewContainerRef: ViewContainerRef,
+  ) { }
 
   ngOnInit() {
+    // Create a portalHost from a DOM element
+    this.portalHost = new DomPortalHost(
+      document.querySelector('#pageHeader'),
+      this.componentFactoryResolver,
+      this.appRef,
+      this.injector
+    );
+
+    // Create a template portal
+    const templatePortal = new TemplatePortal(
+      this.testTemplate, 
+      this.viewContainerRef, 
+      {$implicit: 'Bob'},
+      );
+
+    // Attach portal to host
+    this.portalHost.attach(templatePortal);
   }
 }
